@@ -36,5 +36,5 @@ export function monotonicTime(): number {
   return Math.floor((performance.now() + _timeShift) * 1000) / 1000;
 }
 
-export const DEFAULT_PLAYWRIGHT_TIMEOUT = 30_000;
+export const DEFAULT_PLAYWRIGHT_TIMEOUT = 5_000;
 export const DEFAULT_PLAYWRIGHT_LAUNCH_TIMEOUT = 3 * 60 * 1000; // 3 minutes
