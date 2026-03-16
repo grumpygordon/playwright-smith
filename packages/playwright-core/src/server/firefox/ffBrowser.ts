@@ -310,6 +310,11 @@ export class FFBrowserContext extends BrowserContext {
     await this._browser.session.send('Browser.resetPermissions', { browserContextId: this._browserContextId });
   }
 
+  async doDenyPermissions(_origin: string, _permissions: string[]) {
+    // Firefox doesn't support denying permissions via protocol
+    throw new Error('denyPermissions is not supported in Firefox');
+  }
+
   async setGeolocation(geolocation?: types.Geolocation): Promise<void> {
     verifyGeolocation(geolocation);
     this._options.geolocation = geolocation;

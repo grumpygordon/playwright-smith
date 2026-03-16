@@ -76,6 +76,7 @@ export const methodMetainfo = new Map<string, { internal?: boolean, title?: stri
   ['BrowserContext.cookies', { title: 'Get cookies', group: 'getter', }],
   ['BrowserContext.exposeBinding', { title: 'Expose binding', group: 'configuration', }],
   ['BrowserContext.grantPermissions', { title: 'Grant permissions', group: 'configuration', }],
+  ['BrowserContext.denyPermissions', { title: 'Deny permissions', group: 'configuration', }],
   ['BrowserContext.newPage', { title: 'Create page', }],
   ['BrowserContext.registerSelectorEngine', { internal: true, }],
   ['BrowserContext.setTestIdAttributeName', { internal: true, }],

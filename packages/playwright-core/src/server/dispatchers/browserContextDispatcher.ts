@@ -271,6 +271,11 @@ export class BrowserContextDispatcher extends Dispatcher<BrowserContext, channel
     await this._context.grantPermissions(params.permissions, params.origin);
   }
 
+  async denyPermissions(params: channels.BrowserContextDenyPermissionsParams, progress: Progress): Promise<void> {
+    // Note: progress is ignored because this operation is not cancellable and should not block in the browser anyway.
+    await this._context.denyPermissions(params.permissions, params.origin);
+  }
+
   async clearPermissions(params: channels.BrowserContextClearPermissionsParams, progress: Progress): Promise<void> {
     // Note: progress is ignored because this operation is not cancellable and should not block in the browser anyway.
     await this._context.clearPermissions();

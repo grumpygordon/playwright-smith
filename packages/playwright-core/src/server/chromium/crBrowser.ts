@@ -480,6 +480,44 @@ export class CRBrowserContext extends BrowserContext<CREventsMap> {
     await this._browser._session.send('Browser.resetPermissions', { browserContextId: this._browserContextId });
   }
 
+  async doDenyPermissions(origin: string, permissions: string[]) {
+    const webPermissionToProtocol = new Map<string, Protocol.Browser.PermissionType | Protocol.Browser.PermissionType[]>([
+      ['geolocation', 'geolocation'],
+      ['midi', 'midi'],
+      ['notifications', 'notifications'],
+      ['camera', 'videoCapture'],
+      ['microphone', 'audioCapture'],
+      ['background-sync', 'backgroundSync'],
+      ['ambient-light-sensor', 'sensors'],
+      ['accelerometer', 'sensors'],
+      ['gyroscope', 'sensors'],
+      ['magnetometer', 'sensors'],
+      ['clipboard-read', 'clipboardReadWrite'],
+      ['clipboard-write', 'clipboardSanitizedWrite'],
+      ['payment-handler', 'paymentHandler'],
+      ['midi-sysex', 'midiSysex'],
+      ['storage-access', 'storageAccess'],
+      ['local-fonts', 'localFonts'],
+      ['local-network-access', ['localNetworkAccess', 'localNetwork', 'loopbackNetwork']],
+      ['screen-wake-lock', 'wakeLockScreen'],
+    ]);
+
+    for (const permission of permissions) {
+      const protocolPermissions = webPermissionToProtocol.get(permission);
+      if (!protocolPermissions)
+        throw new Error('Unknown permission: ' + permission);
+      const perms = typeof protocolPermissions === 'string' ? [protocolPermissions] : protocolPermissions;
+      for (const perm of perms) {
+        await this._browser._session.send('Browser.setPermission', {
+          permission: { name: perm },
+          setting: 'denied',
+          origin: origin === '*' ? undefined : origin,
+          browserContextId: this._browserContextId,
+        });
+      }
+    }
+  }
+
   async setGeolocation(geolocation?: types.Geolocation): Promise<void> {
     verifyGeolocation(geolocation);
     this._options.geolocation = geolocation;

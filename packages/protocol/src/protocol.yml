@@ -1242,6 +1242,15 @@ BrowserContext:
           items: string
         origin: string?
 
+    denyPermissions:
+      title: Deny permissions
+      group: configuration
+      parameters:
+        permissions:
+          type: array
+          items: string
+        origin: string?
+
     newPage:
       title: Create page
       returns:

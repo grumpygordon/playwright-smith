@@ -297,6 +297,11 @@ export class WKBrowserContext extends BrowserContext {
     await Promise.all(this.pages().map(page => (page.delegate as WKPage)._clearPermissions()));
   }
 
+  async doDenyPermissions(_origin: string, _permissions: string[]) {
+    // WebKit doesn't support denying permissions via protocol
+    throw new Error('denyPermissions is not supported in WebKit');
+  }
+
   async setGeolocation(geolocation?: types.Geolocation): Promise<void> {
     verifyGeolocation(geolocation);
     this._options.geolocation = geolocation;

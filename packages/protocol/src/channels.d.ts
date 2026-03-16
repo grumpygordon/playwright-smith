@@ -1608,6 +1608,7 @@ export interface BrowserContextChannel extends BrowserContextEventTarget, EventT
   cookies(params: BrowserContextCookiesParams, progress?: Progress): Promise<BrowserContextCookiesResult>;
   exposeBinding(params: BrowserContextExposeBindingParams, progress?: Progress): Promise<BrowserContextExposeBindingResult>;
   grantPermissions(params: BrowserContextGrantPermissionsParams, progress?: Progress): Promise<BrowserContextGrantPermissionsResult>;
+  denyPermissions(params: BrowserContextDenyPermissionsParams, progress?: Progress): Promise<BrowserContextDenyPermissionsResult>;
   newPage(params?: BrowserContextNewPageParams, progress?: Progress): Promise<BrowserContextNewPageResult>;
   registerSelectorEngine(params: BrowserContextRegisterSelectorEngineParams, progress?: Progress): Promise<BrowserContextRegisterSelectorEngineResult>;
   setTestIdAttributeName(params: BrowserContextSetTestIdAttributeNameParams, progress?: Progress): Promise<BrowserContextSetTestIdAttributeNameResult>;
@@ -1771,6 +1772,14 @@ export type BrowserContextGrantPermissionsOptions = {
   origin?: string,
 };
 export type BrowserContextGrantPermissionsResult = void;
+export type BrowserContextDenyPermissionsParams = {
+  permissions: string[],
+  origin?: string,
+};
+export type BrowserContextDenyPermissionsOptions = {
+  origin?: string,
+};
+export type BrowserContextDenyPermissionsResult = void;
 export type BrowserContextNewPageParams = {};
 export type BrowserContextNewPageOptions = {};
 export type BrowserContextNewPageResult = {

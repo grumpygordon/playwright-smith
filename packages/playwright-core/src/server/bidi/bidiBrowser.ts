@@ -330,6 +330,10 @@ export class BidiBrowserContext extends BrowserContext {
     }));
   }
 
+  async doDenyPermissions(origin: string, permissions: string[]) {
+    await Promise.all(permissions.map(p => this._setPermission(origin, p, bidi.Permissions.PermissionState.Denied)));
+  }
+
   private async _setPermission(origin: string, permission: string, state: bidi.Permissions.PermissionState) {
     await this._browser._browserSession.send('permissions.setPermission', {
       descriptor: {

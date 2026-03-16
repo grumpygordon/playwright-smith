@@ -328,6 +328,10 @@ export class BrowserContext extends ChannelOwner<channels.BrowserContextChannel>
     await this._channel.grantPermissions({ permissions, ...options });
   }
 
+  async denyPermissions(permissions: string[], options?: { origin?: string }): Promise<void> {
+    await this._channel.denyPermissions({ permissions, ...options });
+  }
+
   async clearPermissions(): Promise<void> {
     await this._channel.clearPermissions();
   }

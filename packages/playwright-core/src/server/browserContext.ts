@@ -286,6 +286,7 @@ export abstract class BrowserContext<EM extends EventMap = EventMap> extends Sdk
   protected abstract doGetCookies(urls: string[]): Promise<channels.NetworkCookie[]>;
   protected abstract doClearCookies(): Promise<void>;
   protected abstract doGrantPermissions(origin: string, permissions: string[]): Promise<void>;
+  protected abstract doDenyPermissions(origin: string, permissions: string[]): Promise<void>;
   protected abstract doClearPermissions(): Promise<void>;
   protected abstract doSetHTTPCredentials(httpCredentials?: types.Credentials): Promise<void>;
   protected abstract doAddInitScript(initScript: InitScript): Promise<void>;
@@ -398,6 +399,15 @@ export abstract class BrowserContext<EM extends EventMap = EventMap> extends Sdk
   async clearPermissions() {
     this._permissions.clear();
     await this.doClearPermissions();
+  }
+
+  async denyPermissions(permissions: string[], origin?: string) {
+    let resolvedOrigin = '*';
+    if (origin) {
+      const url = new URL(origin);
+      resolvedOrigin = url.origin;
+    }
+    await this.doDenyPermissions(resolvedOrigin, permissions);
   }
 
   async setExtraHTTPHeaders(progress: Progress, headers: types.HeadersArray) {
